@@ -64,10 +64,12 @@ log_model = LogisticRegression()
 log_model.fit(training_data, Y)
 
 # Model accuracy based on all of the data
+print 'Model 1'
 print log_model.score(training_data, Y)
 
 #Null Error Rate
 print 1 - Y.mean()
+print '\n'
 
 # Coeff and the impactfulness on the model
 coeff_df = DataFrame(zip(training_data.columns, np.transpose(log_model.coef_)))
@@ -88,8 +90,42 @@ log_model2.fit(X_train, y_train)
 class_predict = log_model2.predict(X_test)
 
 # Accuracy and null error rate
+print 'Model 2'
 print metrics.accuracy_score(y_test, class_predict)
 print 1 - y_test.mean()
+print '\n'
 
+# Coeff and the impactfulness on the model
 coeff_df = DataFrame(zip(X_train.columns, np.transpose(log_model2.coef_)))
 coeff_df.to_csv('result2.csv')
+
+
+log_model3 = LogisticRegression(penalty='l1')
+log_model3.fit(X_train, y_train)
+
+class_predict = log_model3.predict(X_test)
+
+# Accuracy and null error rate
+print 'Model 3'
+print metrics.accuracy_score(y_test, class_predict)
+print 1 - y_test.mean()
+print '\n'
+
+# Coeff and the impactfulness on the model
+coeff_df = DataFrame(zip(X_train.columns, np.transpose(log_model3.coef_)))
+coeff_df.to_csv('result3.csv')
+
+log_model4 = LogisticRegression(penalty='l2')
+log_model4.fit(X_train, y_train)
+
+class_predict = log_model4.predict(X_test)
+
+# Accuracy and null error rate
+print 'Model 4'
+print metrics.accuracy_score(y_test, class_predict)
+print 1 - y_test.mean()
+print '\n'
+
+# Coeff and the impactfulness on the model
+coeff_df = DataFrame(zip(X_train.columns, np.transpose(log_model4.coef_)))
+coeff_df.to_csv('result4.csv')
