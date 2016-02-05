@@ -14,10 +14,12 @@ import matplotlib.pyplot as plt
 
 # Machine Learning Imports
 from sklearn.linear_model import LogisticRegression
+from sklearn.naive_bayes import GaussianNB
+from sklearn import tree
 
 # For evaluating our ML results
 from sklearn import metrics
-from sklearn.metrics import confusion_matrix, roc_curve, auc
+from sklearn.metrics import confusion_matrix, roc_curve
 
 # season DataFrame is simply the regular/real seaon connected to the post/play off data
 real_season = pd.read_csv('passes.csv')
@@ -63,7 +65,7 @@ log_model = LogisticRegression()
 log_model.fit(training_data, Y)
 
 # Model accuracy based on all of the data
-print 'Model 1'
+print 'Model Logistic'
 print log_model.score(training_data, Y)
 
 #Null Error Rate
@@ -74,6 +76,39 @@ print '\n'
 coeff_df = DataFrame(zip(training_data.columns, np.transpose(log_model.coef_)))
 coeff_df.to_csv('result1.csv')
 
+'''Model Naive Bayes'''
+gnb = GaussianNB()
+gnb.fit(training_data, Y)
+
+# Model accuracy based on all of the data
+print 'Model Naive Bayes'
+print gnb.score(training_data, Y)
+
+#Null Error Rate
+print 1 - Y.mean()
+print '\n'
+
+# Coeff and the impactfulness on the model
+#coeff_df = DataFrame(zip(training_data.columns, np.transpose(gnb.coef_)))
+#coeff_df.to_csv('resultgnb.csv')
+
+'''Model Decision Tree'''
+clf = tree.DecisionTreeClassifier()
+clf.fit(training_data, Y)
+
+# Model accuracy based on all of the data
+print 'Model Decision Tree'
+print clf.score(training_data, Y)
+
+#Null Error Rate
+print 1 - Y.mean()
+print '\n'
+
+# Coeff and the impactfulness on the model
+#coeff_df = DataFrame(zip(training_data.columns, np.transpose(clf.coef_)))
+#coeff_df.to_csv('resultclf.csv')
+
+#===================================================================================
 
 #Split the dataset inot regular and post season data
 X_train = training_data[:17822]
